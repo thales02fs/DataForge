@@ -1,0 +1,82 @@
+# DOCUMENTAÇÃO DATAFLOW
+
+## Informações
+
+- **Criador:** Thales de Freitas Santos
+- **Nome do Sistema:** DataFlow
+- **Versão: 1.0**
+
+## Objetivos e Descrição do Sistema
+
+- **Objetivo:** Automatizar a passagem de dados de planilhas de arquivo Excel para bancos de dados SQLite, facilitando a remodelagem dos dados para bancos de dados relacionais. Após isso você poderá manter os dados no arquivo SQLite ou passar dele para bancos de dados relacionais mais robustos como PostgreSQL, MySQL, dentre outros.
+- **Descrição:** O sistema faz upload de arquivo Excel, faz a leitura do arquivo Excel, limpa e trata dados das planilhas do arquivo Excel, cria automaticamente arquivo SQLite, cria automaticamente uma database no arquivo SQLite, cria automaticamente as tabelas no arquivo SQLite e passa os dados para as tabelas do arquivo SQLite.
+
+## Recursos
+
+Tecnologias utilizadas no software:
+
+- Front-end: Tkinter
+- Back-end: Python
+- Banco de Dados: SQLite
+
+## Requisitos Funcionais
+
+- RF01: O sistema permitirá fazer upload de arquivo .xlsx ou .xls.
+- RF03: O sistema deverá ler o arquivo Excel.
+- RF03: O sistema limpará e tratará os dados do arquivo Excel.
+- RF04: O sistema criará automaticamente o arquivo do banco de dados SQLite.
+- RF03: O sistema levará esses dados para o banco de dados SQLite.
+- RF04: O sistema criará um database no banco SQLite que ficará todas as tabelas referentes às planilhas do arquivo Excel.
+- RF05: Cada arquivo Excel será um único arquivo SQLite com uma única database dentro.
+- RF06: Cada planilha do arquivo Excel será uma tabela no banco SQLite.
+
+## Requisitos Detalhados
+
+### RF02: O sistema limpará e tratará os dados do arquivo excel.
+
+- Título: Tratar e Limpar Dados
+- Ator: Sistema
+- Descrição detalhada:
+1. Remover linhas iguais mantendo apenas a primeira ocorrência.
+2. Tratar valores ausentes, preenchendo com NULL.
+3. Padronizar textos, mantendo a primeira letra de cada palavra como maiúscula e as demais minúsculas.
+4. Converter e padronizar tipo de dado da coluna. O sistema verificará um padrão de tipo naquela coluna, depois reescreverá como NULL locais que estiverem fora de padrão de tipo.
+5. Padronizar datas, mantendo o formato yyyy-mm-dd.
+6. Padronizar horas, mantendo o formato hh:mm:ss.
+7. Validar valores, estabelecerá regras para validar os valores das colunas, caso não se encaixe em uma regra, o valor será reescrito para NULL. 
+8. Regras para validar valores: 1. Idade não pode ser negativa; 2. Preço não pode ser negativo; 3. CPF deve possuir formato válido nnn.nnn.nnn-nn; E-mail deve respeitar padrão esperado nome@email.com ou  nome@email.com.br. 
+9. Remover caracteres indejados.
+10. Regras para remover caracteres indesejados: 1. Espaços de início e fim; 2. Espaços duplicados no meio do texto; 3. Quebras-de-linha “\n”; 4. Tabulações “\”; 5. Caracteres indesejáveis “#, $, !, ?, …”; 6. Símbolos de formatação do excel “R$, …”; 7. Aspas desnecessárias; 8. Espaços entre números;
+- Pré-condição: O usuário deverá ter subido o arquivo excel; o usuário deverá ter clicado em limpar e tratar dados.
+- Pós-condição: O arquivo foi limpo e tratado.
+
+### RF06: Cada planilha do arquivo excel será uma tabela no banco.
+
+Título: Planilha e Tabela
+
+Ator: Sistema
+
+Descrição detalhada: Cada planilha no arquivo será uma tabela no banco. A coluna da planilha será a coluna na tabela do banco, a linha da planilha será igual à do banco. Porém não serão identicos, pois no banco os dados já foram limpos e tratados.
+
+Pré-condição: O usuário deverá ter subido o arquivo excel; o usuário deverá ter clicado em limpar e tratar dados; o usuário deverá ter clicado em passar dados para o banco de dados;
+
+Pós-condição: O arquivo do banco SQLite já vai ter sido criado com os dados limpos e tratados dentro em tabelas.
+
+## Arquitetura
+
+1. Importação do Excel: usuário sobe um arquivo .xlsx ou .xls.
+2. Leitura de Dados: Python e Pandas interpretam as planilhas do arquivo.
+3. Limpeza e Tratamento: Remoção de duplicidades valores ausentes, padronização, etc.
+4. Persistência de Dados: Python e SQLite armazenam os dados tratados.
+5. Interface Desktop: Tkinter apresenta resultados e permite consultar os dados.
+
+## Estrutura de Pastas e Arquivos
+
+- DataForge: pasta principal/geral do projeto, tudo fica nela.
+- service: pasta para regras de negócio do sistema.
+- processing: pasta para ler, analisar, limpar e tratar as planilhas do arquivo Excel subido pelo usuário.
+- database: pasta para conexão, criação e alteração do arquivo do banco de dados SQLite.
+- util: pasta para funções de apoio.
+- test: pasta para testes do sistema.
+- requeriments:  arquivo (.txt) para manter a documentação do sistema.
+- main: arquivo (.py) para rodar o sistema.
