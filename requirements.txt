@@ -1,9 +1,9 @@
-# DOCUMENTAÇÃO DATAFLOW
+# DOCUMENTAÇÃO DATAFORGE
 
 ## Informações
 
 - **Criador:** Thales de Freitas Santos
-- **Nome do Sistema:** DataFlow
+- **Nome do Sistema:** DataForge
 - **Versão: 1.0**
 
 ## Objetivos e Descrição do Sistema
@@ -22,17 +22,17 @@ Tecnologias utilizadas no software:
 ## Requisitos Funcionais
 
 - RF01: O sistema permitirá fazer upload de arquivo .xlsx ou .xls.
-- RF03: O sistema deverá ler o arquivo Excel.
+- RF02: O sistema deverá ler o arquivo Excel.
 - RF03: O sistema limpará e tratará os dados do arquivo Excel.
-- RF04: O sistema criará automaticamente o arquivo do banco de dados SQLite.
-- RF03: O sistema levará esses dados para o banco de dados SQLite.
-- RF04: O sistema criará um database no banco SQLite que ficará todas as tabelas referentes às planilhas do arquivo Excel.
-- RF05: Cada arquivo Excel será um único arquivo SQLite com uma única database dentro.
-- RF06: Cada planilha do arquivo Excel será uma tabela no banco SQLite.
+- RF04: O sistema criará automaticamente o arquivo do banco de dados SQLite (.db).
+- RF05: O arquivo do banco SQLite (.db) terá o mesmo nome do arquivo Excel subido pelo usuário.
+- RF06: O sistema levará os dados limpos e tratados para o banco de dados SQLite de cada planilha.
+- RF07: Cada planilha do arquivo Excel será uma tabela no banco SQLite.
+- RF08: Cada arquivo Excel será um único arquivo SQLite com uma única database dentro.
 
 ## Requisitos Detalhados
 
-### RF02: O sistema limpará e tratará os dados do arquivo excel.
+### RF03: O sistema limpará e tratará os dados do arquivo excel.
 
 - Título: Tratar e Limpar Dados
 - Ator: Sistema
@@ -50,7 +50,7 @@ Tecnologias utilizadas no software:
 - Pré-condição: O usuário deverá ter subido o arquivo excel; o usuário deverá ter clicado em limpar e tratar dados.
 - Pós-condição: O arquivo foi limpo e tratado.
 
-### RF06: Cada planilha do arquivo excel será uma tabela no banco.
+### RF07: Cada planilha do arquivo excel será uma tabela no banco.
 
 Título: Planilha e Tabela
 
@@ -64,19 +64,23 @@ Pós-condição: O arquivo do banco SQLite já vai ter sido criado com os dados 
 
 ## Arquitetura
 
-1. Importação do Excel: usuário sobe um arquivo .xlsx ou .xls.
-2. Leitura de Dados: Python e Pandas interpretam as planilhas do arquivo.
-3. Limpeza e Tratamento: Remoção de duplicidades valores ausentes, padronização, etc.
-4. Persistência de Dados: Python e SQLite armazenam os dados tratados.
-5. Interface Desktop: Tkinter apresenta resultados e permite consultar os dados.
+1. Interface Desktop: Tkinter apresenta funcionalidades iniciais.
+2. Importação do Excel: Usuário sobe um arquivo .xlsx ou .xls.
+3. Leitura de Dados: Python e Pandas interpretam as planilhas do arquivo.
+4. Limpeza e Tratamento: Remoção de duplicidades, valores ausentes, padronização, etc.
+5. Geração do Banco: Sistema gera um arquivo SQLite (.db).
+6. Persistência de Dados: Python e SQLite armazenam os dados tratados no arquivo SQLite (.db).
+7. Disponibilização do Banco: Sistema disponibiliza para download no arquivo SQLite (.db).
 
-## Estrutura de Pastas e Arquivos
+## Estrutura de Pastas
 
 - DataForge: pasta principal/geral do projeto, tudo fica nela.
+- .venv: pasta para ambiente virtual, manterá instaladas todas as dependências do projeto.
+- view: pasta para manter pastas e arquivos do front-end.
+- components: pasta para guardar componentes do front-end, fica dentro da pasta view.
+- controller: pasta para direcionar as ações do sistema para determinadas pastas, arquivos e funções, ela é dependente das ações do usuário na view.
 - service: pasta para regras de negócio do sistema.
 - processing: pasta para ler, analisar, limpar e tratar as planilhas do arquivo Excel subido pelo usuário.
-- database: pasta para conexão, criação e alteração do arquivo do banco de dados SQLite.
-- util: pasta para funções de apoio.
+- repository: pasta para conexão, criação e alteração do arquivo do banco de dados SQLite.
+- util: pasta para funções de apoio, auxiliares, genéricas e reutilizáveis no sistema, como mensagens do sistema, etc.
 - test: pasta para testes do sistema.
-- requeriments:  arquivo (.txt) para manter a documentação do sistema.
-- main: arquivo (.py) para rodar o sistema.
